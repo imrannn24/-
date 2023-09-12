@@ -13,6 +13,12 @@
 		2A9484FF2A9F862100BEA819 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A9484FD2A9F862100BEA819 /* Main.storyboard */; };
 		2A9485012A9F862300BEA819 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A9485002A9F862300BEA819 /* Assets.xcassets */; };
 		2A9485042A9F862300BEA819 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A9485022A9F862300BEA819 /* LaunchScreen.storyboard */; };
+		2A94850D2A9F866F00BEA819 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2A94850C2A9F866F00BEA819 /* SnapKit */; };
+		2A94850F2AA2268B00BEA819 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A94850E2AA2268B00BEA819 /* ApiManager.swift */; };
+		2A9485112AA2298800BEA819 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9485102AA2298800BEA819 /* WeatherModel.swift */; };
+		2AAC33DA2AAC85CF002C708A /* VK in Frameworks */ = {isa = PBXBuildFile; productRef = 2AAC33D92AAC85CF002C708A /* VK */; };
+		2AAC33DC2AAC8FC2002C708A /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAC33DB2AAC8FC2002C708A /* AuthViewController.swift */; };
+		2AC4106E2AA399E900077082 /* Comfortaa.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2AC4106D2AA399E900077082 /* Comfortaa.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,11 @@
 		2A9485002A9F862300BEA819 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A9485032A9F862300BEA819 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A9485052A9F862300BEA819 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A94850E2AA2268B00BEA819 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		2A9485102AA2298800BEA819 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		2AAC33DB2AAC8FC2002C708A /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		2AC4106D2AA399E900077082 /* Comfortaa.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comfortaa.ttf; sourceTree = "<group>"; };
+		2AC4106F2AA39D2900077082 /* Comfortaa-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A94850D2A9F866F00BEA819 /* SnapKit in Frameworks */,
+				2AAC33DA2AAC85CF002C708A /* VK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,9 +69,14 @@
 		2A9484F62A9F862100BEA819 /* Погода */ = {
 			isa = PBXGroup;
 			children = (
+				2AC4106D2AA399E900077082 /* Comfortaa.ttf */,
+				2AC4106F2AA39D2900077082 /* Comfortaa-Bold.ttf */,
 				2A9484F72A9F862100BEA819 /* AppDelegate.swift */,
 				2A9484F92A9F862100BEA819 /* SceneDelegate.swift */,
 				2A9484FB2A9F862100BEA819 /* ViewController.swift */,
+				2AAC33DB2AAC8FC2002C708A /* AuthViewController.swift */,
+				2A94850E2AA2268B00BEA819 /* ApiManager.swift */,
+				2A9485102AA2298800BEA819 /* WeatherModel.swift */,
 				2A9484FD2A9F862100BEA819 /* Main.storyboard */,
 				2A9485002A9F862300BEA819 /* Assets.xcassets */,
 				2A9485022A9F862300BEA819 /* LaunchScreen.storyboard */,
@@ -83,6 +101,10 @@
 			dependencies = (
 			);
 			name = "Погода";
+			packageProductDependencies = (
+				2A94850C2A9F866F00BEA819 /* SnapKit */,
+				2AAC33D92AAC85CF002C708A /* VK */,
+			);
 			productName = "Погода";
 			productReference = 2A9484F42A9F862100BEA819 /* Погода.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +133,10 @@
 				Base,
 			);
 			mainGroup = 2A9484EB2A9F862100BEA819;
+			packageReferences = (
+				2A94850B2A9F866F00BEA819 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				2AAC33D82AAC85CF002C708A /* XCRemoteSwiftPackageReference "VKSDK-iOS" */,
+			);
 			productRefGroup = 2A9484F52A9F862100BEA819 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,6 +153,7 @@
 			files = (
 				2A9485042A9F862300BEA819 /* LaunchScreen.storyboard in Resources */,
 				2A9485012A9F862300BEA819 /* Assets.xcassets in Resources */,
+				2AC4106E2AA399E900077082 /* Comfortaa.ttf in Resources */,
 				2A9484FF2A9F862100BEA819 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,9 +165,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A94850F2AA2268B00BEA819 /* ApiManager.swift in Sources */,
 				2A9484FC2A9F862100BEA819 /* ViewController.swift in Sources */,
 				2A9484F82A9F862100BEA819 /* AppDelegate.swift in Sources */,
 				2A9484FA2A9F862100BEA819 /* SceneDelegate.swift in Sources */,
+				2AAC33DC2AAC8FC2002C708A /* AuthViewController.swift in Sources */,
+				2A9485112AA2298800BEA819 /* WeatherModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +325,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,6 +354,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -358,6 +390,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2A94850B2A9F866F00BEA819 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		2AAC33D82AAC85CF002C708A /* XCRemoteSwiftPackageReference "VKSDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/VKCOM/VKSDK-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.104.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2A94850C2A9F866F00BEA819 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A94850B2A9F866F00BEA819 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		2AAC33D92AAC85CF002C708A /* VK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AAC33D82AAC85CF002C708A /* XCRemoteSwiftPackageReference "VKSDK-iOS" */;
+			productName = VK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2A9484EC2A9F862100BEA819 /* Project object */;
 }
