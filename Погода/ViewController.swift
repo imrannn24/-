@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 import CoreLocation
 
+protocol SendText {
+    func setData(ttext: String)
+}
+
 class ViewController: UIViewController {
     
     static let view = ViewController()
@@ -29,6 +33,7 @@ class ViewController: UIViewController {
         view.leftViewMode = .always
         view.layer.cornerRadius = 16
         view.alpha = 0.7
+        view.textColor = .black
         return view
     }()
     
@@ -48,7 +53,6 @@ class ViewController: UIViewController {
     
     lazy var celsiusLabel: UILabel = {
         let view = UILabel()
-        view.text = "°"
         view.font = UIFont(name: "Comfortaa-Bold", size: 64)
         return view
     }()
@@ -94,23 +98,34 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        view.insetsLayoutMarginsFromSafeArea = true
+        
+        view.safeAreaInsetsDidChange()
+        
         setUpView()
         
         startLocationManager()
         
         searchTF.delegate = self
         
+        navigationItem.title = "Погода"
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign in", style: .plain, target: self, action: #selector(openSignIn))
-            }
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Find", style: .plain, target: self, action: #selector(onenFinder))
+        
+    }
     
     func startLocationManager() {
-        locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            locationManager.pausesLocationUpdatesAutomatically = false
-            locationManager.startUpdatingLocation()
+            locationManager.requestWhenInUseAuthorization()
+            
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                self.locationManager.pausesLocationUpdatesAutomatically = false
+                self.locationManager.startUpdatingLocation()
+            }
         }
     }
     
@@ -128,6 +143,7 @@ class ViewController: UIViewController {
                             self.locationLabel.textColor = .black
                             self.temperatureLabel.text = String(Int(value.main.temp))
                             self.temperatureLabel.textColor = .black
+                            self.celsiusLabel.text = "°"
                             self.celsiusLabel.textColor = .black
                             self.windLabel.text = String(value.wind.speed)
                             self.windLabel.textColor = .black
@@ -136,7 +152,7 @@ class ViewController: UIViewController {
                             self.weatherIconImage.image = UIImage(named: "\(pogoda.icon)")
                             self.dateValue.text = self.todayDate.stringDate
                             self.dateValue.textColor = .black
-                            print(value)
+                            self.locationManager.stopUpdatingLocation()
                         } else {
                             self.bgImage.image = UIImage(named: "night")
                             let pogoda: Weather = value.weather.first!
@@ -144,6 +160,7 @@ class ViewController: UIViewController {
                             self.locationLabel.textColor = .white
                             self.temperatureLabel.text = String(Int(value.main.temp))
                             self.temperatureLabel.textColor = .white
+                            self.celsiusLabel.text = "°"
                             self.celsiusLabel.textColor = .white
                             self.windLabel.text = String(value.wind.speed)
                             self.windLabel.textColor = .white
@@ -152,6 +169,7 @@ class ViewController: UIViewController {
                             self.weatherIconImage.image = UIImage(named: "\(pogoda.icon)")
                             self.dateValue.text = self.todayDate.stringDate
                             self.dateValue.textColor = .white
+                            self.locationManager.stopUpdatingLocation()
                         }
                     }
                 case .failure(let failure):
@@ -163,68 +181,75 @@ class ViewController: UIViewController {
     @objc func openSignIn() {
         navigationController?.pushViewController(AuthViewController(), animated: true)
     }
+    
+    @objc func onenFinder() {
+        let vc = FindCityViewController()
+        vc.delegate = self
+        self.present(vc, animated: true)
+    }
  
     
     
     private func setUpView() {
         
-        view.addSubview(bgImage)
+        let guide = view.safeAreaLayoutGuide
         
-        bgImage.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        view.addSubview(bgImage)
+        bgImage.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(searchTF)
-        
-        searchTF.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(90)
-            make.horizontalEdges.equalToSuperview().inset(30)
-            make.height.equalTo(45)
-        }
+        searchTF.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(locationLabel)
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(searchTF.snp.bottom).offset(20)
-            make.horizontalEdges.equalToSuperview().inset(30)
-        }
-
         view.addSubview(weatherDesriptionLabel)
+        weatherDesriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        weatherDesriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(locationLabel.snp.bottom).offset(-5)
-            make.horizontalEdges.equalToSuperview().inset(30)
-        }
-
         view.addSubview(temperatureLabel)
-        
-        temperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(weatherDesriptionLabel.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-        }
+        temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(weatherIconImage)
-        
-        weatherIconImage.snp.makeConstraints { make in
-            make.bottom.equalTo(temperatureLabel.snp.bottom).offset(-10)
-            make.leading.equalTo(temperatureLabel.snp.trailing).offset(-10)
-            make.width.height.equalTo(80)
-        }
+        weatherIconImage.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(celsiusLabel)
+        celsiusLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        celsiusLabel.snp.makeConstraints { make in
-            make.top.equalTo(temperatureLabel.snp.top)
-            make.leading.equalTo(temperatureLabel.snp.trailing)
-        }
-        
-        view.addSubview(dateValue)
-        
-        dateValue.snp.makeConstraints { make in
-            make.top.equalTo(temperatureLabel.snp.bottom).offset(15)
-            make.centerX.equalToSuperview()
-        }
-                
+        NSLayoutConstraint.activate([bgImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     bgImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                                     bgImage.heightAnchor.constraint(equalTo: view.heightAnchor),
+                                     bgImage.widthAnchor.constraint(equalTo: view.widthAnchor),
+                                    
+                                     searchTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     searchTF.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor , multiplier: 1),
+                                     searchTF.heightAnchor.constraint(equalToConstant: 45),
+                                     searchTF.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 25),
+                                     searchTF.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -25),
+                                    
+                                     locationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     locationLabel.topAnchor.constraint(equalTo: searchTF.bottomAnchor, constant: 20),
+                                     locationLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 25),
+                                     locationLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -25),
+                                    
+                                     weatherDesriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     weatherDesriptionLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 20),
+                                     weatherDesriptionLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 25),
+                                     weatherDesriptionLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -25),
+                                    
+                                     temperatureLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     temperatureLabel.topAnchor.constraint(equalTo: weatherDesriptionLabel.bottomAnchor,
+                                                                                                        constant: 20),
+                                    
+                                     weatherIconImage.bottomAnchor.constraint(equalTo: temperatureLabel.bottomAnchor),
+                                     weatherIconImage.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor,
+                                                                                                        constant: -8),
+                                     weatherIconImage.widthAnchor.constraint(equalToConstant: 80),
+                                     weatherIconImage.heightAnchor.constraint(equalToConstant: 80),
+                                    
+                                     celsiusLabel.topAnchor.constraint(equalTo: temperatureLabel.topAnchor),
+                                     celsiusLabel.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor,
+                                                                                                        constant: -8)])
+
     }
 
 }
@@ -232,7 +257,6 @@ class ViewController: UIViewController {
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
-//            print(lastLocation.coordinate.latitude, lastLocation.coordinate.longitude)
             updateWeatherInfo(latitude: lastLocation.coordinate.latitude,
                               longtitude: lastLocation.coordinate.longitude)
         }
@@ -294,6 +318,7 @@ extension ViewController: UITextFieldDelegate {
                             self.locationLabel.textColor = .black
                             self.temperatureLabel.text = String(Int(value.main.temp))
                             self.temperatureLabel.textColor = .black
+                            self.celsiusLabel.text = "°"
                             self.celsiusLabel.textColor = .black
                             self.windLabel.text = String(value.wind.speed)
                             self.windLabel.textColor = .black
@@ -310,6 +335,7 @@ extension ViewController: UITextFieldDelegate {
                             self.locationLabel.textColor = .white
                             self.temperatureLabel.text = String(Int(value.main.temp))
                             self.temperatureLabel.textColor = .white
+                            self.celsiusLabel.text = "°"
                             self.celsiusLabel.textColor = .white
                             self.windLabel.text = String(value.wind.speed)
                             self.windLabel.textColor = .white
@@ -330,4 +356,8 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
-
+extension ViewController: SendText {
+    func setData(ttext: String) {
+        searchTF.text = ttext
+    }
+}

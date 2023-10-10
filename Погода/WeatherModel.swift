@@ -71,7 +71,7 @@ struct Wind: Codable {
     let deg: Int
     let gust: Double
 }
-
+//
 //
 //{
 //  "base" : "stations",
@@ -122,3 +122,4 @@ struct Wind: Codable {
 //    "1h" : 0.37
 //  }
 //}
+

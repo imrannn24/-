@@ -16,8 +16,6 @@ class ApiManager {
         
     }
     
-    var tasks:[String] = ["imran", "mirjigit"]
-    
     func requestDataByLocation(latitude: Double, longtitude: Double, completition: @escaping (Result<Welcome,Error>) -> Void) {
         
         guard let url = URL(
@@ -64,6 +62,32 @@ class ApiManager {
             do {
                 
                 let value = try JSONDecoder().decode(Welcome.self, from: data)
+                completition(.success(value))
+            } catch {
+                print(error)
+                completition(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func requestCitiesName(completition: @escaping (Result<City,Error>) -> Void) {
+        
+        guard let url = URL(
+            string:"https://countriesnow.space/api/v0.1/countries/population/cities")
+        else {
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let data = data else {return}
+            
+            do {
+                
+                let value = try JSONDecoder().decode(City.self, from: data)
                 completition(.success(value))
             } catch {
                 print(error)
